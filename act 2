@@ -1,0 +1,32 @@
+class EmployeeException extends Exception {
+    public EmployeeException(String message) {
+        super(message);
+    }
+}
+
+class Employee {
+    private String idNum;
+    private double hourlyWage;
+
+    public Employee(String idNum, double hourlyWage) throws EmployeeException {
+        if (hourlyWage < 100.00 || hourlyWage > 400.00) {
+            throw new EmployeeException("Hourly wage should be between $100.00 and $400.00");
+        }
+        this.idNum = idNum;
+        this.hourlyWage = hourlyWage;
+        System.out.println("Employee created: ID - " + idNum + ", Hourly wage - $" + hourlyWage);
+    }
+}
+
+public class EmployeeTest {
+    public static void main(String[] args) {
+        try {
+            Employee emp1 = new Employee("EMP001", 95.50); // Below the allowed range
+            Employee emp2 = new Employee("EMP002", 250.00); // Within the allowed range
+            Employee emp3 = new Employee("EMP003", 450.00); // Above the allowed range
+            Employee emp4 = new Employee("EMP004", 105.00); // Within the allowed range
+        } catch (EmployeeException e) {
+            System.out.println("Error creating employee: " + e.getMessage());
+        }
+    }
+}
